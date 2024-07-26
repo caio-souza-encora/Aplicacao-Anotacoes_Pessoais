@@ -12,6 +12,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@fontsource/roboto": "^5.0.13",
     "vue": "^3.4.29"
   },
   "devDependencies": {
