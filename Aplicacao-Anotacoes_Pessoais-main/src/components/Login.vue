@@ -28,10 +28,11 @@
         </form>
 
     </div>
+
 </template>
 
+
 <script setup>
-    import "@fontsource/roboto";
     import {ref, watchEffect} from "vue"
     const user = ref()
     const password = ref()
@@ -44,7 +45,10 @@
     })
 </script>
 
+
 <style>
+
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
     #app {
         padding: 0;
@@ -57,7 +61,7 @@
         padding: 0;
         margin: 0;
     }
-
+    
     .banner {
         background: linear-gradient(#728AE9, #151F8C);
         display: flex;
@@ -141,5 +145,15 @@
         border-radius: 31px;
         background-color: #151F8C;
         color: whitesmoke;
+    }
+
+    @media (max-width: 1023px){
+        .banner{
+            visibility: hidden;
+            height: 2px;
+        }
+        .login{
+            width: 100vw;
+        }
     }
 </style>
