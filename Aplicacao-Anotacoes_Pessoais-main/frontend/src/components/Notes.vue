@@ -1,42 +1,164 @@
 <template>
+    <div id="app">
+      <header>
+        <nav>
+          <div class="user-actions">
+            <button class="sign-out">Sign out</button>
+          </div>
+        </nav>
+
+        <div class="search">
+
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="search-img">
+                <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clip-rule="evenodd" />
+            </svg>
+
+            <input type="text" placeholder="PERSONAL NOTES" />
+
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="add">
+                <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clip-rule="evenodd" />
+            </svg>
+
+        </div>
+      </header>
+
+      <main>
+        
+      </main>
+    </div>
+  </template>
+  
+  <script setup>
+  import { ref, onMounted } from 'vue';
+  </script>
+  
+  <style>
+
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+  
+    #app {
+        padding: 0;
+        margin: 0;
+        font-family: 'Roboto';
+    }
     
-    <div class="search">
+    header {
+        background-color: #ffffff;
+        font-family: 'Roboto';
+        display: block;
+        padding: 10px;
+        width: 100vw;
+        height: 20vh;
+    }
+    
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10vh;
+    }
 
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-        </svg>
+    .search {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+    }
 
-        <form action="/search" method="GET">
-            <input class="search-bar" type="search" placeholder="Where everything is in the right place">
-            <button class="search-button" type="submit">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m5.231 13.481L15 17.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v16.5c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Zm3.75 11.625a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
-                </svg>
-            </button>
-        </form>
+    .search-img{
+        height: 5vh;
+        width: auto;
+        color: black;
+    }
 
-    </div>
+    .search input {
+        padding: 5px;
+        font-size: 16px;
+        width: 40vw;
+        height: 5vh;
+        border: 0px #ffffff;
+        background-color: none;
+        border-radius: 31px;
+    }
 
-    <div>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill=#151F8C class="size-6">
-            <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clip-rule="evenodd" />
-        </svg>
-    </div>
+    .search input::placeholder{
+        font-weight: 600;
+        font-size: larger;
+        color: black;
+        text-align: center;
+        opacity: 1;
+    }
 
-    <div>
-        <ul class="slider">
-            <li>
-                
-            </li>
-        </ul>
-    </div>
+    .add {
+        height: 5vh;
+        width: auto;
+        color: #728AE9;
+        cursor: pointer;
+    }
+    .add:hover{
+        color: #151F8C;
+    }
 
-</template>
+    .user-actions {
+        position: absolute;
+        right: 5vw;
+        top: 2vh;
+    }
+    
+    .user-actions .sign-out {
+        background: none;
+        border: none;
+        color: #5f5f5f;
+        cursor: pointer;
+        font-size: large;
+    }
 
-<script>
-
-</script>
-
-<style>
-
-</style>
+    .user-actions .sign-out:hover {
+        color: #151F8C;
+    }
+    
+    .notes-section {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+    
+    main {
+        display: block;
+        width: 100vw;
+        height: auto;
+        background-color: #ffffff;
+    }
+    
+    .note-card {
+        background-color: #007bff;
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        width: 200px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    
+    .note-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+    }
+    
+    .note-actions .edit,
+    .note-actions .delete {
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    
+    footer {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+  </style>
