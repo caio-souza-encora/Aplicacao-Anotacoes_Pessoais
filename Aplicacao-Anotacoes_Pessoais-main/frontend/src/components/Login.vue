@@ -43,6 +43,32 @@
         console.log(user.value)
         console.log(password.value)
     })
+
+    const submitForm = async () => {
+        try {
+            const response = await fetch('http://localhost:8080/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: username.value,
+                password: password.value
+            })
+            });
+
+            if (response.ok) {
+            const data = await response.json();
+            message.value = data.message;
+            router.push('/Notes');
+            } else {
+            const errorData = await response.json();
+            message.value = errorData.detail;
+            }
+        } catch (error) {
+            message.value = 'An error occurred: ' + error.message;
+        }
+    };
 </script>
 
 
