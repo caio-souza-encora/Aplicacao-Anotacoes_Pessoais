@@ -15,18 +15,18 @@
 
         <form id="login">
             <div class="form-group">
-                <label for="user">Email</label>
-                <input type="email" id="user" name="user" v-model="user" placeholder="name@email.com"><br>
+                <label for="user">User</label>
+                <input type="email" id="user" name="user" v-model="user" placeholder="name@email.com" required><br>
             </div>
 
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" v-model="password" placeholder="password"><br>
+                <input type="password" id="password" name="password" v-model="password" placeholder="password" required><br>
             </div>
 
             <button class="signIn-button" type="submit" id="signIn" name="signIn">Sign In</button> 
         </form>
-
+        <div v-if="error" class="error">{{ error }}</div>
     </div>
 
 </template>
@@ -34,8 +34,12 @@
 
 <script setup>
     import {ref, watchEffect} from "vue"
+    import { useRouter } from 'vue-router'
+    import axios from 'axios'
     const user = ref()
     const password = ref()
+    const error = ref(null)
+    const router = useRouter()
 
     console.log(user.value)
     
@@ -44,29 +48,18 @@
         console.log(password.value)
     })
 
-    const submitForm = async () => {
-        try {
-            const response = await fetch('http://localhost:8000/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                username: username.value,
-                password: password.value
-            })
-            });
 
-            if (response.ok) {
-            const data = await response.json();
-            message.value = data.message;
-            router.push('/Notes');
-            } else {
-            const errorData = await response.json();
-            message.value = errorData.detail;
+    const login = async () => {
+        try {
+            const response = await axios.post('http://localhost:8000/login', {
+                username: username.value,
+                password: password.value,
+            })
+            if (response.status === 200) {
+                router.push('/notes')
             }
-        } catch (error) {
-            message.value = 'An error occurred: ' + error.message;
+        } catch (err) {
+            error.value = 'Invalid credentials'
         }
     };
 </script>
@@ -181,5 +174,15 @@
         .login{
             width: 100vw;
         }
+    }
+
+    .error {
+        font-size: larger;
+        color: rgb(255, 255, 255);
+        background-color: #666;
+        width: 20%;
+        border-radius: 31px;
+        margin-top: 10vh;
+        text-align: center;
     }
 </style>
