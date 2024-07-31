@@ -6,5 +6,5 @@
 
 <!--HTML-->
 <template>
-  <Notes/>
+  <Login/>
 </template>

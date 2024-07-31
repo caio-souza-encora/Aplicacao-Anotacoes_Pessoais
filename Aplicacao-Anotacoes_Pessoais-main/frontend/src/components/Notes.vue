@@ -23,13 +23,11 @@
       </header>
 
       <main>
-        
       </main>
     </div>
   </template>
   
   <script setup>
-  import { ref, onMounted } from 'vue';
   </script>
   
   <style>
@@ -117,48 +115,11 @@
         color: #151F8C;
     }
     
-    .notes-section {
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-    }
-    
     main {
         display: block;
         width: 100vw;
         height: auto;
         background-color: #ffffff;
     }
-    
-    .note-card {
-        background-color: #007bff;
-        color: white;
-        padding: 20px;
-        border-radius: 10px;
-        width: 200px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-    
-    .note-actions {
-        display: flex;
-        justify-content: flex-end;
-        gap: 10px;
-    }
-    
-    .note-actions .edit,
-    .note-actions .delete {
-        background: none;
-        border: none;
-        color: white;
-        cursor: pointer;
-        font-size: 16px;
-    }
-    
-    footer {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 20px;
-    }
+
   </style>
