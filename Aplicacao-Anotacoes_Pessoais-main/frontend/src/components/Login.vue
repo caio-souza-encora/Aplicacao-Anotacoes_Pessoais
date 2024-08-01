@@ -13,10 +13,10 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
         </svg>
 
-        <form id="login">
+        <form id="login" action="#">
             <div class="form-group">
                 <label for="user">User</label>
-                <input type="email" id="user" name="user" v-model="user" placeholder="name@email.com" required><br>
+                <input type="email" id="username" name="username" v-model="username" placeholder="name@email.com" required><br>
             </div>
 
             <div class="form-group">
@@ -24,7 +24,7 @@
                 <input type="password" id="password" name="password" v-model="password" placeholder="password" required><br>
             </div>
 
-            <button class="signIn-button" type="submit" id="signIn" name="signIn">Sign In</button> 
+            <button class="signIn-button" type="submit" id="signIn" name="signIn" @click.prevent="login">Sign In</button> 
         </form>
         <div v-if="error" class="error">{{ error }}</div>
     </div>
@@ -36,27 +36,28 @@
     import {ref, watchEffect} from "vue"
     import { useRouter } from 'vue-router'
     import axios from 'axios'
-    const user = ref()
+    const username = ref()
     const password = ref()
     const error = ref(null)
     const router = useRouter()
 
-    console.log(user.value)
+    console.log(username.value)
     
     watchEffect(()=> {
-        console.log(user.value)
+        console.log(username.value)
         console.log(password.value)
     })
 
 
     const login = async () => {
         try {
-            const response = await axios.post('http://localhost:8000/login', {
+            const response = await axios.post('http://localhost:8000/user/login', {
                 username: username.value,
-                password: password.value,
+                password: password.value
             })
             if (response.status === 200) {
                 router.push('/notes')
+                return
             }
         } catch (err) {
             error.value = 'Invalid credentials'
@@ -177,10 +178,11 @@
     }
 
     .error {
-        font-size: larger;
+        font-weight: 600;
         color: rgb(255, 255, 255);
         background-color: #666;
-        width: 20%;
+        width: 30%;
+        height: 3%;
         border-radius: 31px;
         margin-top: 10vh;
         text-align: center;

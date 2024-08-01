@@ -23,11 +23,38 @@
       </header>
 
       <main>
+        <div>
+            <carousel :per-page="1">
+                <slide v-for="note in notes" :key="note.id">
+                    <div class="note">
+                        <h2>{{ note.title }}</h2>
+                        <p>{{ note.content }}</p>
+                        <small>Created at: {{ note.created_at }}</small>
+                    </div>
+                </slide>
+            </carousel>
+        </div>
       </main>
     </div>
   </template>
   
   <script setup>
+    import { ref, onMounted } from 'vue';
+    import axios from 'axios';
+    import { Carousel, Slide } from 'vue-carousel';
+
+    const notes = ref([]);
+
+    const fetchNotes = async () => {
+        try {
+            const response = await axios.get('http://localhost:8000/notes/load');
+            notes.value = response.data;
+        } catch (error) {
+            console.error('Error fetching notes:', error);
+        }
+    };
+
+    onMounted(fetchNotes);
   </script>
   
   <style>

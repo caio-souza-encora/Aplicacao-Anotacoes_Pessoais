@@ -12,3 +12,13 @@ class User(Base):
     username = Column(String, index=True)
     password = Column(String)
     created_at = Column(DateTime, default=datetime.utcnow)
+
+class Notes(Base):
+    __tablename__ = "note"
+
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    user_id = Column(UUID(as_uuid=True))
+    title = Column(String)
+    content = Column(String)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow)
