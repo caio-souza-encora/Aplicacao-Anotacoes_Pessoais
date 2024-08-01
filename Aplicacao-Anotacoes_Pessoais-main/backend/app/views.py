@@ -24,9 +24,9 @@ def login(user: UserLogin):
 
 
 @note_router.post('/create')
-def create_note(user_id: UUID, notes_input: NoteCreate):
+def create_note(notes_input: NoteCreate):
     try:
-        NotesService.create_notes(user_id=user_id, notes_input=notes_input)
+        NotesService.create_notes(notes_input=notes_input)
         return {"message": "Note Created"}
     except Exception as error:
         raise HTTPException(422, detail='An error has ocurred while creating a new note'+str(error))

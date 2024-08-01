@@ -29,9 +29,9 @@ class UserService:
         
         
 class NotesService:
-    def create_notes(user_id, notes_input):
+    def create_notes(notes_input):
         with Session() as session:
-            session.add(Notes(user_id=notes_input.user, title=notes_input.title, content=notes_input.content, created_at=datetime.utcnow()))
+            session.add(Notes(user_id=notes_input.user_id, title=notes_input.title, content=notes_input.content, created_at=datetime.utcnow()))
             session.commit()
     
     def get_notes(user_id):
@@ -42,9 +42,9 @@ class NotesService:
             session.delete(note)
             session.commit()
 
-    def update_notes(note_id: UUID, notes_input):
+    def update_notes(notes_input):
         with Session() as session:
-            db_note = session.query(Notes).filter(Notes.id == note_id).first()
+            db_note = session.query(Notes).filter(Notes.id == notes_input.user_id).first()
 
             if db_note is None:
                 raise HTTPException(status_code=404, detail="Note not found")
