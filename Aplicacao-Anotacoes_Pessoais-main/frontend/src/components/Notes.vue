@@ -25,6 +25,11 @@
       <main>
         <div>
             <carousel :per-page="1">
+                <slide v-if="notes.length === 0">
+                    <div class="empty-note">
+                        <p>No notes available</p>
+                    </div>
+                </slide>
                 <slide v-for="note in notes" :key="note.id">
                     <div class="note">
                         <h2>{{ note.title }}</h2>
@@ -43,11 +48,14 @@
     import axios from 'axios';
     import { Carousel, Slide } from 'vue-carousel';
 
+    const userId = localStorage.getItem('user_id');
     const notes = ref([]);
 
     const fetchNotes = async () => {
         try {
-            const response = await axios.get('http://localhost:8000/notes/load');
+            const response = await axios.get('http://localhost:8000/notes/load',{
+                user_id: userId
+            })
             notes.value = response.data;
         } catch (error) {
             console.error('Error fetching notes:', error);

@@ -1,7 +1,9 @@
+from fastapi import HTTPException
 from app.models import User, Notes
 from app.connection import SessionLocal as Session
 from datetime import datetime
 from passlib.context import CryptContext
+from uuid import UUID
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -25,13 +27,29 @@ class UserService:
                 return user
             return None
         
+        
 class NotesService:
-    def create_notes(notes_input):
+    def create_notes(user_id, notes_input):
         with Session() as session:
             session.add(Notes(user_id=notes_input.user, title=notes_input.title, content=notes_input.content, created_at=datetime.utcnow()))
             session.commit()
     
     def get_notes(user_id):
-        return session.query(Notes).filter(Notes.user_id == user_id)
+        return Session.query(Notes).filter(Notes.user_id == user_id).all()
 
+    def delete_note(note):
+        with Session() as session:
+            session.delete(note)
+            session.commit()
+
+    def update_notes(note_id: UUID, notes_input):
+        with Session() as session:
+            db_note = session.query(Notes).filter(Notes.id == note_id).first()
+
+            if db_note is None:
+                raise HTTPException(status_code=404, detail="Note not found")
+            
+            db_note.title = notes_input.title
+            db_note.content = notes_input.content
+            session.commit
     

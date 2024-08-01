@@ -56,6 +56,7 @@
                 password: password.value
             })
             if (response.status === 200) {
+                localStorage.setItem('user_id', response.data.user_id)
                 router.push('/notes')
                 return
             }
