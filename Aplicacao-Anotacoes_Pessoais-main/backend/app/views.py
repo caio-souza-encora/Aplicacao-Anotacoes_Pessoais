@@ -23,6 +23,10 @@ def login(user: UserLogin):
 
 
 
+@note_router.get('/load')
+def get_notes(user_id: UUID):
+    return NotesService.get_notes(user_id)
+
 @note_router.post('/create')
 def create_note(notes_input: NoteCreate):
     try:
@@ -30,10 +34,6 @@ def create_note(notes_input: NoteCreate):
         return {"message": "Note Created"}
     except Exception as error:
         raise HTTPException(422, detail='An error has ocurred while creating a new note'+str(error))
-
-@note_router.get('/load')
-def get_notes(user_id: UUID):
-    return NotesService.get_notes(user_id)
 
 @note_router.post('/edit')
 def edit_note(notes_input: NoteInDB):
@@ -44,7 +44,7 @@ def edit_note(notes_input: NoteInDB):
         raise HTTPException(422, detail='An error has ocurred while editing the note'+str(error))
     
 @note_router.post('/delete')
-def delete_note(notes_input: NoteCreate):
+def delete_note(notes_input: NoteInDB):
     try:
         NotesService.delete_note(note=notes_input)
         return {"message": "Note Deleted"}

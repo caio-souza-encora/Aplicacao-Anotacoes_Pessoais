@@ -15,7 +15,7 @@
 
             <input type="text" placeholder="PERSONAL NOTES" />
 
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="add">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="add" @click.prevent="create_note">
                 <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clip-rule="evenodd" />
             </svg>
 
@@ -26,19 +26,39 @@
         <div>
             <carousel :per-page="1">
                 <slide v-if="notes.length === 0">
+
                     <div class="empty-note">
                         <p>No notes available</p>
                     </div>
+
                 </slide>
                 <slide v-for="note in notes" :key="note.id">
+
                     <div class="note">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="edit" @click.prevent="edit_note">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="delete" @click.prevent="delete_note">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                        </svg>
                         <h2>{{ note.title }}</h2>
                         <p>{{ note.content }}</p>
-                        <small>Created at: {{ note.created_at }}</small>
                     </div>
+                    <small>Created at: {{ note.created_at }}</small>
+
                 </slide>
             </carousel>
         </div>
+
+        <div class="edit_create-note">
+            <form>
+                <input type="text" class="note-title" v-model="title" placeholder="Title" />
+                <input type="text" class="note-content" v-model="content" placeholder="Content" />
+                <button class="edit_save-button" @click.prevent="edit">Save</button>
+                <button class="create_save-button" @click.prevent="create">Save</button> 
+            </form>
+        </div>
+
       </main>
     </div>
   </template>
@@ -50,6 +70,9 @@
 
     const userId = localStorage.getItem('user_id');
     const notes = ref([]);
+    const title = ref();
+    const content = ref();
+
 
     const fetchNotes = async () => {
         try {
@@ -63,6 +86,59 @@
     };
 
     onMounted(fetchNotes);
+
+    const create_note = {
+
+    }
+
+    const edit_note = {
+        
+    }
+
+
+    const create = async () => {
+        try{
+            const response = await axios.post('http://localhost:8000/notes/create',{
+                notes_input: {
+                    user_id: userId,
+                    title: title,
+                    content: content
+                }
+            })
+        }
+        catch (error){
+            console.error('Error while creating:', error);
+        }
+    }
+
+    const edit = async () => {
+        try{
+            const response = await axios.post('http://localhost:8000/notes/edit',{
+                notes_input: {
+                    id: notes.id,
+                    user_id: userId,
+                    title: title,
+                    content: content,
+                    created_at: notes.created_at,
+                    updated_at: notes.updated_at
+                }
+            })
+        }
+        catch (error){
+            console.error('Error while editing:', error);
+        }
+    }
+
+    const delete_note = async () => {
+        try{
+            const response = await axios.post('http://localhost:8000/notes/delete',{
+                note: notes
+            })
+        }
+        catch (error){
+            console.error('Error while deleting:', error);
+        }
+    }
   </script>
   
   <style>
@@ -155,6 +231,10 @@
         width: 100vw;
         height: auto;
         background-color: #ffffff;
+    }
+
+    .edit_create-notes {
+        display: none;
     }
 
   </style>
