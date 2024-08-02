@@ -23,16 +23,16 @@
       </header>
 
       <main>
-        <div>
-            <carousel :per-page="1">
-                <slide v-if="notes.length === 0">
+        <div class="container">
+            <Carousel :per-page="1">
+                <Slide v-if="notes.length === 0">
 
                     <div class="empty-note">
                         <p>No notes available</p>
                     </div>
 
-                </slide>
-                <slide v-for="note in notes" :key="note.id">
+                </Slide>
+                <Slide v-for="note in notes" :key="note.id">
 
                     <div class="note">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="edit" @click.prevent="edit_note">
@@ -46,8 +46,8 @@
                     </div>
                     <small>Created at: {{ note.created_at }}</small>
 
-                </slide>
-            </carousel>
+                </Slide>
+            </Carousel>
         </div>
 
         <div class="edit_create-note">
@@ -76,7 +76,7 @@
 
     const fetchNotes = async () => {
         try {
-            const response = await axios.get('http://localhost:8000/notes/load',{
+            const response = await axios.get('http://localhost:8000/notes/load/',{
                 user_id: userId
             })
             notes.value = response.data;
@@ -237,4 +237,15 @@
         display: none;
     }
 
+    .note {
+        background-color: #151F8C;
+        color: white;
+        height: 200px;
+        width: 200px;
+    }
+
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+    }
   </style>
